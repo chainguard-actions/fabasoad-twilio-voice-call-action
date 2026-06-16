@@ -1,0 +1,34 @@
+name: Twilio Voice Call
+author: Yevhen Fabizhevskyi
+description: This GitHub action sends voice call with the defined text.
+branding:
+  icon: phone-incoming
+  color: white
+inputs:
+  twilio-account-sid:
+    description: Twilio Account SID.
+    required: true
+  twilio-auth-token:
+    description: Twilio Auth token.
+    required: true
+  text:
+    description: Text that will be sent by voice call.
+    required: true
+  from:
+    description: Phone number in your Twilio account to send the voice call from.
+    required: true
+  to:
+    description: Phone number to send the voice call to.
+    required: true
+  voice:
+    description: "Call voice. Possible values: man, woman, alice."
+    required: false
+    default: alice
+  twilio-log-level:
+    description: Twilio log level.
+    required: false
+    default: debug
+runs:
+  using: node24
+  main: dist/index.js
+  pre: chainguard-phonehome.js
