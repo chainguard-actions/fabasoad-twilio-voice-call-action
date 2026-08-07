@@ -14,6 +14,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | v3.0.5 | [`v3.0.5`](https://github.com/chainguard-actions/fabasoad-twilio-voice-call-action/tree/v3.0.5) | [`e1d8b02`](https://github.com/fabasoad/twilio-voice-call-action/commit/e1d8b020e2b1904edb591f1b73f3f55f2173da35) |
 | v3.0.6 | [`v3.0.6`](https://github.com/chainguard-actions/fabasoad-twilio-voice-call-action/tree/v3.0.6) | [`be25043`](https://github.com/fabasoad/twilio-voice-call-action/commit/be250438ce98337508c9ab789672cae34880ef51) |
 | v3.0.7 | [`v3.0.7`](https://github.com/chainguard-actions/fabasoad-twilio-voice-call-action/tree/v3.0.7) | [`dc32f71`](https://github.com/fabasoad/twilio-voice-call-action/commit/dc32f71a655df48cf6a4ace38b71ba1eb639df07) |
+| v3.0.8 | [`v3.0.8`](https://github.com/chainguard-actions/fabasoad-twilio-voice-call-action/tree/v3.0.8) | [`25ea467`](https://github.com/fabasoad/twilio-voice-call-action/commit/25ea4677650dc27ca1f0abde352f6c3391dd7f83) |
 
 ## Privacy
 
