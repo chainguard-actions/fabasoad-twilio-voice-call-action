@@ -1,0 +1,43 @@
+{
+  "name": "twilio-voice-call-action",
+  "version": "3.0.8",
+  "description": "This GitHub action sends voice call with the defined text.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node24 --outfile=dist/index.js",
+    "lint": "biome lint --write src",
+    "test": "vitest run --coverage",
+    "clean": "rm -rf coverage && rm -rf temp",
+    "clean:unsafe": "rm -f package-lock.json && rm -rf node_modules && rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabasoad/twilio-voice-call-action.git"
+  },
+  "keywords": [
+    "actions",
+    "twilio",
+    "voip",
+    "call",
+    "phone"
+  ],
+  "author": "Yevhen Fabizhevskyi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fabasoad/twilio-voice-call-action/issues"
+  },
+  "homepage": "https://github.com/fabasoad/twilio-voice-call-action#readme",
+  "dependencies": {
+    "@actions/core": "~3.0.1",
+    "@actions/github": "~9.1.1",
+    "twilio": "~6.0.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "~2.5.7",
+    "@types/node": "~26.1.2",
+    "@vitest/coverage-v8": "~4.1.10",
+    "esbuild": "~0.28.1",
+    "typescript": "~7.0.2",
+    "vitest": "~4.1.10"
+  }
+}

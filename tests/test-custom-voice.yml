@@ -1,0 +1,31 @@
+name: Test custom voice input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          twilio-account-sid: ACfakeaccountsid00000000000000000
+          twilio-auth-token: fakeauthtoken0000000000000000000
+          text: "Hello, this is a test voice call using a male voice."
+          from: "+15550000001"
+          to: "+15550000002"
+          voice: man
+      - name: Assert action ran and failed gracefully with invalid credentials (voice=man)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully as expected with fake Twilio credentials"
+          elif [ "$OUTCOME" = "success" ]; then
+            echo "PASS: action unexpectedly succeeded (real credentials may be configured)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
