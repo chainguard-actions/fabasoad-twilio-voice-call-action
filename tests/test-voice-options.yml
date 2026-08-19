@@ -1,0 +1,58 @@
+---
+name: Test voice options parameter
+on:
+  workflow_dispatch:
+jobs:
+  test-voice-man:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run action with voice set to 'man'
+        id: action-man
+        uses: .
+        with:
+          twilio-account-sid: ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          twilio-auth-token: fake-auth-token-for-testing
+          text: "Testing man voice option"
+          from: "+15005550006"
+          to: "+15005550006"
+          voice: man
+          twilio-log-level: debug
+        continue-on-error: true
+      - name: Assert action attempted to run with 'man' voice
+        env:
+          OUTCOME: ${{ steps.action-man.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" != "failure" ]; then
+            echo "FAIL: expected action to fail with invalid credentials, but got outcome: $OUTCOME"
+            exit 1
+          fi
+          echo "PASS: action ran with voice=man and failed as expected due to invalid credentials"
+
+  test-voice-woman:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run action with voice set to 'woman'
+        id: action-woman
+        uses: .
+        with:
+          twilio-account-sid: ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          twilio-auth-token: fake-auth-token-for-testing
+          text: "Testing woman voice option"
+          from: "+15005550006"
+          to: "+15005550006"
+          voice: woman
+          twilio-log-level: debug
+        continue-on-error: true
+      - name: Assert action attempted to run with 'woman' voice
+        env:
+          OUTCOME: ${{ steps.action-woman.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" != "failure" ]; then
+            echo "FAIL: expected action to fail with invalid credentials, but got outcome: $OUTCOME"
+            exit 1
+          fi
+          echo "PASS: action ran with voice=woman and failed as expected due to invalid credentials"

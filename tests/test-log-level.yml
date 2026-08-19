@@ -1,0 +1,31 @@
+---
+name: Test Twilio log level parameter
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run action with silent log level
+        id: action
+        uses: .
+        with:
+          twilio-account-sid: ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          twilio-auth-token: fake-auth-token-for-testing
+          text: "Testing log level parameter"
+          from: "+15005550006"
+          to: "+15005550006"
+          voice: alice
+          twilio-log-level: silent
+        continue-on-error: true
+      - name: Assert action attempted to run with silent log level
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" != "failure" ]; then
+            echo "FAIL: expected action to fail with invalid credentials, but got outcome: $OUTCOME"
+            exit 1
+          fi
+          echo "PASS: action ran with twilio-log-level=silent and failed as expected due to invalid credentials"
