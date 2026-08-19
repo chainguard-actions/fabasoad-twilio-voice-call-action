@@ -1,5 +1,5 @@
 ---
-name: Test default voice parameter
+name: Test authentication failure with fake credentials
 on:
   workflow_dispatch:
 jobs:
@@ -13,20 +13,18 @@ jobs:
         with:
           twilio-account-sid: "ACfakeaccountsid00000000000000000"
           twilio-auth-token: "fakeauthtoken000000000000000000000"
-          text: "Testing default voice parameter"
+          text: "Hello from GitHub Actions test"
           from: "+15550000001"
           to: "+15550000002"
-          # voice is intentionally omitted to test the default value of "alice"
-      - name: Assert action failed due to invalid credentials (not invalid voice)
+          voice: "alice"
+          twilio-log-level: "debug"
+      - name: Assert action failed due to invalid credentials
         env:
           OUTCOME: ${{ steps.action.outcome }}
         run: |
           echo "outcome: $OUTCOME"
-          # The action should fail because of invalid Twilio credentials,
-          # NOT because of an unsupported voice (default "alice" is valid).
-          # Either way, the outcome should be "failure" since credentials are fake.
           if [ "$OUTCOME" != "failure" ]; then
             echo "FAIL: expected action to fail with invalid credentials, but outcome was '$OUTCOME'"
             exit 1
           fi
-          echo "PASS: action correctly failed (default voice 'alice' was accepted, failed on auth)"
+          echo "PASS: action correctly failed with invalid Twilio credentials"
