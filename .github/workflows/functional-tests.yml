@@ -1,0 +1,31 @@
+---
+name: Functional Tests
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+    inputs:
+      text:
+        description: "Text for a call"
+        required: false
+        default: "Call from functional tests"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  twilio-voice-call:
+    name: Twilio voice call
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Make a call
+        uses: ./
+        with:
+          twilio-account-sid: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          twilio-auth-token: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          text: ${{ inputs.text }}
+          from: ${{ secrets.TWILIO_NUMBER_FROM }}
+          to: ${{ secrets.TWILIO_NUMBER_TO }}
