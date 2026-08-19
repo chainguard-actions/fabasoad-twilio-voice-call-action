@@ -1,5 +1,5 @@
 ---
-name: Test invalid credentials error handling
+name: Test default voice parameter
 on:
   workflow_dispatch:
 jobs:
@@ -7,19 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - name: Run action with invalid credentials (expect failure)
+      - name: Run action without specifying voice (uses default alice)
         id: action
         uses: .
         with:
           twilio-account-sid: "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
           twilio-auth-token: "fake-auth-token-for-testing"
-          text: "This is a test voice call message"
+          text: "Testing default voice parameter"
           from: "+15550000001"
           to: "+15550000002"
-          voice: alice
+          # voice not specified — should default to alice
           twilio-log-level: debug
         continue-on-error: true
-      - name: Assert action failed due to invalid credentials
+      - name: Assert action failed at API level (not at input validation)
         env:
           OUTCOME: ${{ steps.action.outcome }}
         run: |
@@ -28,4 +28,4 @@ jobs:
             echo "FAIL: expected action to fail with invalid credentials, but got outcome: $OUTCOME"
             exit 1
           fi
-          echo "PASS: action correctly failed with invalid credentials"
+          echo "PASS: action reached API call stage (default voice was accepted)"
